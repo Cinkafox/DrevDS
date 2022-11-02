@@ -9,8 +9,8 @@ const { createCanvas, loadImage } = require('canvas')
 
 const demotivatorImage = async (img, args,) => {
     const data = args.join(" ").split(",")
-    const title = data[0]
-    const subtitle = data[1]
+    const title = data[0] || ""
+    const subtitle = data[1] || ""
 
     const avatar = await loadImage(img.attachment)
     const IWidth = 1280
