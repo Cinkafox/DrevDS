@@ -1,6 +1,7 @@
 const { Client, MessageAttachment} = require('discord.js-selfbot-v13');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const demotivator = require('./modules/demotivator')
+const banner = require("./modules/banner")
 
 const client = new Client({
     patchVoice:true
@@ -23,23 +24,31 @@ client.on("message",async(m)=>{
     if (m.author.username == client.user.username) return
     if (m.content.toLowerCase().includes("мудр")) return playMuzon(m.member?.voice?.channel, './music/mudriy.mp3')
     const args = m.content.split(" ")
-    if (args.shift() == client.user.toString()) demotiv(args,m)
+    if (args.shift() == client.user.toString()){
+        console.log(m.author.name,"ввел ",args.join(" "));
+        switch(args.shift().toLowerCase()){
+            case "демотиватор":
+                attachWraper(args, m, demotivator)
+                break
+            case "баннер":
+                attachWraper(args,m,banner)
+                break
+        }
+    }
 })
 
-async function demotiv(args,m){
+async function attachWraper(args,m,func){
     const attach = new MessageAttachment(m.attachments.first()?.attachment) || null
-    if (!attach) return
-    console.log(attach)
-    const data = args.join(" ").split(',')
-    if (data[0] == "") return
-    try{
-        const image = await demotivator(attach, data[0], data[1] || "")
+    if (!attach) return m.channel.send("Чел,а картина?")
+    try {
+        const image = await func(attach,args)
         m.channel.send({
             content: "Нате," + m.author.toString(),
             files: [image]
         })
-}   catch(e){
-        m.channel.send("Иди нахуй со своей webp!")
+    } catch (e) {
+        console.log(e);
+        m.channel.send("Пукб срынбк я абасрался бы выполнении кода(((")
     }
 }
 

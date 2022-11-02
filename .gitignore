@@ -8,7 +8,7 @@
 
 # production
 /build
-
+/htmljs
 
 # misc
 .DS_Store
