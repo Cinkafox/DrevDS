@@ -25,7 +25,7 @@ client.on("message",async(m)=>{
     if (m.content.toLowerCase().includes("мудр")) return playMuzon(m.member?.voice?.channel, './music/mudriy.mp3')
     const args = m.content.split(" ")
     if (args.shift() == client.user.toString()){
-        console.log(m.author.name,"ввел ",args.join(" "));
+        console.log(m.author.username,"ввел ",args.join(" "));
         switch(args.shift().toLowerCase()){
             case "демотиватор":
                 attachWraper(args, m, demotivator)
