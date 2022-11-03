@@ -2,6 +2,7 @@ const { Client, MessageAttachment} = require('discord.js-selfbot-v13');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const demotivator = require('./modules/demotivator')
 const banner = require("./modules/banner")
+const spray = require("./modules/spray")
 
 const client = new Client({
     patchVoice:true
@@ -33,13 +34,16 @@ client.on("message",async(m)=>{
             case "баннер":
                 attachWraper(args,m,banner)
                 break
+            case "спрейот":
+                attachWraper(args,m,spray,false)
+                break
         }
     }
 })
 
-async function attachWraper(args,m,func){
+async function attachWraper(args,m,func,imageRequied = true){
     const attach = new MessageAttachment(m.attachments.first()?.attachment) || null
-    if (!attach) return m.channel.send("Чел,а картина?")
+    if (!attach.attachment && imageRequied) return m.channel.send("Чел,а картина?")
     try {
         const image = await func(attach,args)
         m.channel.send({

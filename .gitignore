@@ -20,6 +20,8 @@ key.json
 index.html
 test.js
 package-lock.json
+func.js
+/dev
 
 npm-debug.log*
 yarn-debug.log*

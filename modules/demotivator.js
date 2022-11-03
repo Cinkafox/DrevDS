@@ -7,7 +7,7 @@ const { createCanvas, loadImage } = require('canvas')
  * @returns {Buffer}
  */
 
-const demotivatorImage = async (img, args,) => {
+const demotivatorImage = async (img, args) => {
     const data = args.join(" ").split(",")
     const title = data[0] || ""
     const subtitle = data[1] || ""
@@ -24,7 +24,6 @@ const demotivatorImage = async (img, args,) => {
     
     const StrLength = title.length
     const CanvasHeight = Height + textSize * 1.5
-    //console.log(StrLength / 1.5 * textSize,IWidth)
     let CanvasWidthRaz = (((StrLength / 1.5 * textSize) > IWidth) ? (StrLength * textSize / 1.5 / 2) : 0)
 
     const CanvasWidth = Width + CanvasWidthRaz
