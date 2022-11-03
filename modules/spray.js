@@ -6,7 +6,9 @@ const bg = "./assets/spray.jpg"
 const spray = async (img, args) => {
     const data = args.join(" ").split(",")
     let mess0 = data[0] 
-    if(mess0 === undefined) return
+    if(mess0 === undefined){
+        return console.log("Срынбк(")
+    }
     let mess1 = data[1] || ""
 
     let cover = await loadImage(bg)
