@@ -1,4 +1,3 @@
-//Код взят у https://github.com/zispidd/discord_demotivator_bot и чуть изменен.за что сябки
 const { createCanvas, loadImage } = require('canvas')
 /**
  * 

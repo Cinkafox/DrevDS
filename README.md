@@ -1,3 +1,2 @@
 # DrevoBot
-# DrevoBot
-# DrevoBot
+Пиздец бот хуль
