@@ -17,10 +17,9 @@
 .env.test.local
 .env.production.local
 key.json
-index.html
-test.js
 package-lock.json
-func.js
+test.js
+/devbyhtml
 /dev
 
 npm-debug.log*

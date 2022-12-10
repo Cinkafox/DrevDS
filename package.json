@@ -12,9 +12,7 @@
     "canvas": "^2.10.1",
     "discord.js-selfbot-v13": "^2.8.5",
     "play-dl": "^1.9.5",
+    "request": "^2.88.2",
     "tweetnacl": "^1.0.3"
-  },
-  "devDependencies": {
-    "perspectivejs": "^1.0.3"
   }
 }

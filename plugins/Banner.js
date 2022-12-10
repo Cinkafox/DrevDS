@@ -1,9 +1,11 @@
 const { createCanvas, loadImage } = require('canvas')
 const Perspective = require("../lib/Perspective")
 const bg = "./assets/banner.jpg"
+const { Attach, RequireAttachment } = require('../lib/AttachWraper')
+const PluginManager = require('../lib/PluginManager')
 
 const bannerImg = async (img) => {
-    const avatar = await loadImage(img.attachment)
+    const avatar = await loadImage(img)
     let cover = await loadImage(bg)
     const canvas = createCanvas(cover.width, cover.height)
     const ctx = canvas.getContext('2d')
@@ -21,4 +23,6 @@ const bannerImg = async (img) => {
     return buffer
 }
 
-module.exports = bannerImg
+PluginManager.CreatePlugin("баннер",(args,m)=>{
+    RequireAttachment(args, m, bannerImg)
+})

@@ -1,12 +1,14 @@
 const { createCanvas, loadImage } = require('canvas')
 const Perspective = require("../lib/Perspective")
 const bg = "./assets/spray.jpg"
-
+const { Attach, RequireAttachment } = require('../lib/AttachWraper')
+const PluginManager = require('../lib/PluginManager')
 
 const spray = async (img, args) => {
+    args.shift()
     const data = args.join(" ").split(",")
-    let mess0 = data[0] 
-    if(mess0 === undefined){
+    let mess0 = data[0]
+    if (mess0 === undefined) {
         return console.log("Срынбк(")
     }
     let mess1 = data[1] || ""
@@ -20,8 +22,8 @@ const spray = async (img, args) => {
     ctx.fillStyle = '#036'
     ctx.textAlign = 'center'
     ctx.fillText("Спрей от", cover.width / 2, 360)
-    if (img.attachment !== undefined) {
-        const avatar = await loadImage(img.attachment)
+    if (img !== undefined) {
+        const avatar = await loadImage(img)
         var p = new Perspective(ctx, avatar)
         p.draw([
             [134, 370],
@@ -56,4 +58,6 @@ function spText(ctx, text, x, y = 660, s) {
     spText(ctx, text, x, y + s)
 }
 
-module.exports = spray
+PluginManager.CreatePlugin("спрей от", (args, m) => {
+    RequireAttachment(args, m, spray,false)
+})
