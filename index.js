@@ -13,7 +13,7 @@ client.on('ready', async () => {
 })
 client.login(require("./key.json"));
 
-client.on("message",async(m)=>{
+client.on("messageCreate",async(m)=>{
     if (m.author.username == client.user.username) return
     const args = m.content.split(" ")
 
