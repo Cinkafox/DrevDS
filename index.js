@@ -1,10 +1,11 @@
 const {Client} = require('discord.js-selfbot-v13');
 const PluginManager = require('./lib/PluginManager')
+const IgnoranceManager = require("./lib/IgnoranceManger")
 const Logger = require('./lib/Logger')
 
 const client = new Client({
-    patchVoice:true,
-    checkUpdate: false
+    patchVoice: true,
+    checkUpdate: false,
 });
 
 client.on('ready', async () => {
@@ -21,7 +22,10 @@ client.on("messageCreate",async(m)=>{
         Logger.info(m.author.username,"ввел",args.join(" "));
 
         try {
-            PluginManager.Execute(args,m)
+            if(IgnoranceManager.hasInIgnorance(m.author.username))
+                throw Error("Пидорас блокнут!")
+
+            PluginManager.Execute(args,m,client)
         } catch (error) {
             Logger.error(error);
         }
