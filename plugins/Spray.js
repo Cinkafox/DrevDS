@@ -3,13 +3,14 @@ const Perspective = require("../lib/Perspective")
 const bg = "./assets/spray.jpg"
 const { Attach, RequireAttachment } = require('../lib/AttachWraper')
 const PluginManager = require('../lib/PluginManager')
+const Logger = require('../lib/Logger')
 
 const spray = async (img, args) => {
     args.shift()
     const data = args.join(" ").split(",")
     let mess0 = data[0]
     if (mess0 === undefined) {
-        return console.log("Срынбк(")
+        return Logger.error("Срынбк(")
     }
     let mess1 = data[1] || ""
 

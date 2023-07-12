@@ -18,7 +18,7 @@ client.on("message",async(m)=>{
     const args = m.content.split(" ")
 
     if (args.shift() == client.user.toString()){
-        Logger.info(m.author.username,"ввел ",args.join(" "));
+        Logger.info(m.author.username,"ввел",args.join(" "));
 
         try {
             PluginManager.Execute(args,m)
