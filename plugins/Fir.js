@@ -18,9 +18,7 @@ PluginManager.CreatePlugin("пофырчи",(args,m) =>{
         ,
         flags : MessageFlags.FLAGS.IS_VOICE_MESSAGE
     })
-    
 
-	m.channel.send(attachment);
     if(m.member.voice.channel != undefined)
         playMuzon(m.member.voice.channel,"./assets/music/fir.ogg")
 })
