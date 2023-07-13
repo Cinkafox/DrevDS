@@ -23,6 +23,7 @@ PluginManager.CreatePlugin("инфа",(args,m) =>{
 })
 
 PluginManager.CreatePlugin("напиши",(args,m) =>{
+    args.shift()
     send(m,args.join(" "))
 })
 
