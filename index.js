@@ -1,18 +1,18 @@
-const {Client} = require('discord.js-selfbot-v13');
+const { Client } = require('discord.js-selfbot-v13');
 const PluginManager = require('./lib/PluginManager')
 const IgnoranceManager = require("./lib/IgnoranceManger")
 const Logger = require('./lib/Logger')
 
 const client = new Client({
-    patchVoice: true,
     checkUpdate: false,
-});
+    patchVoice: true
+})
+
 
 client.on('ready', async () => {
     PluginManager.load("../plugins")
     Logger.info(`${client.user.username} is ready!`);
 })
-client.login(require("./key.json"));
 
 client.on("messageCreate",async(m)=>{
     if (m.author.username == client.user.username) return
@@ -31,3 +31,5 @@ client.on("messageCreate",async(m)=>{
         }
     }
 })
+
+client.login(require("./key.json"));

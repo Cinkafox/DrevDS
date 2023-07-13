@@ -1,10 +1,26 @@
-const Logger = require('../lib/Logger')
+const { MessageFlags } = require('discord.js-selfbot-v13')
 const { playMuzon } = require('../lib/MusicPlayer')
 const PluginManager = require('../lib/PluginManager')
-const send = require('../lib/SendMessageManager')
+const fs = require('fs')
 
 PluginManager.CreatePlugin("пофырчи",(args,m) =>{
-    send(m,"Фыр-фыр =3 UwU OwO >w< ^w^")
+    m.channel.sendTyping()
+    m.channel.send({
+        files: [
+            {
+                attachment: fs.readFileSync("./assets/music/fir.ogg"),
+                name: "voice-message.ogg",
+                contentType : "audio/ogg",
+                duration: 4.19,
+                waveform: 'AAANCAsHDRIJBwoLB2a0tbWgnk95Rz0='
+            }
+        ]
+        ,
+        flags : MessageFlags.FLAGS.IS_VOICE_MESSAGE
+    })
+    
+
+	m.channel.send(attachment);
     if(m.member.voice.channel != undefined)
-        playMuzon(m.member.voice.channel,"./assets/music/fir.mp3")
+        playMuzon(m.member.voice.channel,"./assets/music/fir.ogg")
 })
