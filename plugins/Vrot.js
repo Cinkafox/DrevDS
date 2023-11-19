@@ -18,14 +18,13 @@ const bg = "./assets/thn.jpg"
 
     ctx.font = 'normal 15px Arial'
     ctx.fillStyle = '#5a0'
-    ctx.textAlign = 'Left'
+    ctx.textAlign = 'left'
     ctx.fillText(args[0] + " 42 года(300 метров от вас)", 202, 122)
 
-    const buffer = canvas.toBuffer('image/png')
-    return buffer
+    return canvas.toBuffer('image/png')
 }
 
-PluginManager.CreatePlugin("врот", (args, m) => {
+PluginManager.CreatePlugin("врот",(args, m) => {
     let user
     if (m.mentions.users) {
         user = m.mentions.users.last()
@@ -35,5 +34,4 @@ PluginManager.CreatePlugin("врот", (args, m) => {
         return
     }
     Attach([user.username], m, Vrot, user.avatarURL().replace(".webp", ".png"))
-
 })

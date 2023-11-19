@@ -13,6 +13,7 @@ function genWho(){
 }
 
 PluginManager.CreatePlugin("выбери",(args,m) =>{
+    args.shift()
     let vib = args.join(" ").split(" или ")
     let ors = vib[Math.floor(Math.random() * vib.length)]
     send(m,ors)

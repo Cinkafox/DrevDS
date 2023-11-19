@@ -53,10 +53,9 @@ const demotivatorImage = async (img, args) => {
     ctx.textAlign = 'center'
     ctx.fillText(subtitle, Width / 2 + CanvasWidthRaz, IHeight * 1.25 + 2 + textSize / coefUmen)
 
-    const buffer = canvas.toBuffer('image/png')
-    return buffer
+    return canvas.toBuffer('image/png')
 }
 
-PluginManager.CreatePlugin("демотиватор",(args,m)=>{
-    RequireAttachment(args, m, demotivatorImage)
+PluginManager.CreatePlugin("демотиватор",async (args,m)=>{
+    await RequireAttachment(args, m, demotivatorImage)
 })

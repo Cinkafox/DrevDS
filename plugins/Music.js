@@ -13,3 +13,7 @@ PluginManager.CreatePlugin("я русский",(args,m)=>{
 PluginManager.CreatePlugin("еврей",(args,m)=>{
     playMuzon.play(m,"./assets/music/jew.wav")
 })
+
+PluginManager.CreatePlugin("мяу",(args,m)=>{
+    playMuzon.play(m,"./assets/music/neco.wav")
+})

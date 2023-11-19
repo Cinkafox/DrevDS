@@ -19,10 +19,9 @@ const bannerImg = async (img) => {
         [83, 438]
     ]);
 
-    const buffer = canvas.toBuffer('image/png')
-    return buffer
+    return canvas.toBuffer('image/png')
 }
 
-PluginManager.CreatePlugin("баннер",(args,m)=>{
-    RequireAttachment(args, m, bannerImg)
+PluginManager.CreatePlugin("баннер",async (args,m)=>{
+    await RequireAttachment(args, m, bannerImg)
 })

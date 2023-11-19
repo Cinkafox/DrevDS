@@ -41,12 +41,11 @@ const spray = async (img, args) => {
     ctx.fillStyle = '#fff'
     spText(ctx, mess1.split(" "), cover.width / 2, 660, size + 10)
 
-    const buffer = canvas.toBuffer('image/png')
-    return buffer
+    return canvas.toBuffer('image/png')
 }
 
 function spText(ctx, text, x, y = 660, s) {
-    if (text.length == 0) return
+    if (text.length === 0) return
     let txt = text.shift()
 
     b()
@@ -59,6 +58,6 @@ function spText(ctx, text, x, y = 660, s) {
     spText(ctx, text, x, y + s)
 }
 
-PluginManager.CreatePlugin("спрей от", (args, m) => {
-    RequireAttachment(args, m, spray,false)
+PluginManager.CreatePlugin("спрей от", async (args, m) => {
+    await RequireAttachment(args, m, spray,false)
 })
