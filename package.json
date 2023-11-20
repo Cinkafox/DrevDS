@@ -15,6 +15,7 @@
     "discord.js-selfbot-v13": "^2.14.8",
     "node-wav": "^0.0.2",
     "play-dl": "^1.9.5",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "ytdl-core": "^4.11.5"
   }
 }
