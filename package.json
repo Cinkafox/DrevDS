@@ -15,6 +15,7 @@
     "@discordjs/voice": "^0.16.0",
     "canvas": "^2.11.2",
     "discord.js-selfbot-v13": "^2.14.8",
+    "dotenv": "^16.3.1",
     "fluent-ffmpeg": "^2.1.2",
     "node-wav": "^0.0.2",
     "play-dl": "^1.9.5",

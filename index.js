@@ -5,6 +5,7 @@ const { Streamer, streamLivestreamVideo } = require('@dank074/discord-video-stre
 const Logger = require('./lib/Logger')
 const send = require('./lib/SendMessageManager')
 const ConnectionManager = require('./lib/ConnectionManager')
+require('dotenv').config();
 
 const client = new Client({
     checkUpdate: false,
@@ -38,4 +39,4 @@ client.on("messageCreate",async(m)=>{
     }
 })
 
-client.login(require("./key.json"));
+client.login(process.env.KEY);
