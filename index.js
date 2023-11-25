@@ -1,14 +1,17 @@
 const { Client } = require('discord.js-selfbot-v13');
 const PluginManager = require('./lib/PluginManager')
 const IgnoranceManager = require("./lib/IgnoranceManger")
+const { Streamer, streamLivestreamVideo } = require('@dank074/discord-video-stream')
 const Logger = require('./lib/Logger')
 const send = require('./lib/SendMessageManager')
+const ConnectionManager = require('./lib/ConnectionManager')
 
 const client = new Client({
     checkUpdate: false,
     patchVoice: true
 })
 
+ConnectionManager.setStreamer(new Streamer(client))
 
 client.on('ready', async () => {
     PluginManager.load("../plugins")
@@ -22,14 +25,15 @@ client.on("messageCreate",async(m)=>{
     if (name === client.user.toString()){
         Logger.info(m.author.username,"ввел",args.join(" "));
 
-        try {
-            if(IgnoranceManager.hasInIgnorance(m.author.username)) {
-                throw Error("Пидорас блокнут!")
-            }
+        if(IgnoranceManager.hasInIgnorance(m.author.username)) {
+            Logger.error("ПИДОРАС БЛОКНУТ! ",m.author.username)
+            return
+        }
 
-            PluginManager.Execute(args,m,client)
-        } catch (error) {
-            Logger.error(error);
+        var out = PluginManager.Execute(args,m,client)
+        if(out != null){
+            Logger.error("БАЛЯ АШИБКА НАХУЙ!")
+            console.log(out)
         }
     }
 })
