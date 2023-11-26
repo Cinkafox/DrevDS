@@ -39,4 +39,5 @@ client.on("messageCreate",async(m)=>{
     }
 })
 
+Logger.debug(process.env.KEY)
 client.login(process.env.KEY);

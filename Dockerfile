@@ -9,10 +9,10 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update
 RUN apt-get install python3 ffmpeg nodejs make build-essential gcc -y
 
+RUN mkdir /Bot && cd /Bot
+WORKDIR /Bot
 RUN git clone https://github.com/Cinkafox/DrevDS
-WORKDIR /DrevDS
+WORKDIR /Bot/DrevDS
 
-COPY package*.json ./
 RUN npm install
-COPY . .
 CMD [ "npm", "run", "start" ]
