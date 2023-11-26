@@ -5,7 +5,10 @@ const { Streamer, streamLivestreamVideo } = require('@dank074/discord-video-stre
 const Logger = require('./lib/Logger')
 const send = require('./lib/SendMessageManager')
 const ConnectionManager = require('./lib/ConnectionManager')
-require('dotenv').config();
+const envout = require('dotenv').config()
+if(envout.error){
+    throw new Error("ENV FUCKED!" + envout.error.message)
+}
 
 const client = new Client({
     checkUpdate: false,
@@ -39,5 +42,5 @@ client.on("messageCreate",async(m)=>{
     }
 })
 
-Logger.debug(process.env.KEY)
+
 client.login(process.env.KEY);
