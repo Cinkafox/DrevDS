@@ -21,6 +21,7 @@
     "node-wav": "^0.0.2",
     "play-dl": "^1.9.5",
     "prism-media": "^1.3.5",
+    "tiny-json-http": "^7.5.1",
     "tweetnacl": "^1.0.3",
     "ytdl-core": "^4.11.5"
   }
