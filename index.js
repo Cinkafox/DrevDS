@@ -28,7 +28,9 @@ client.on("messageCreate",async(m)=>{
     if (m.author.username === client.user.username) return
     const args = m.content.split(" ")
 
-    const name = args.shift();
+    const name = args.shift()
+    if(args.length == 0) return
+
     if (name === client.user.toString()){
         Logger.info(m.author.username,"ввел",args.join(" "));
 

@@ -2,19 +2,24 @@ const Logger = require('../lib/Logger')
 const PluginManager = require('../lib/PluginManager')
 const send = require("../lib/SendMessageManager")       
 const tiny = require('tiny-json-http')        
-const { hasInOwner } = require('../lib/IgnoranceManger')
+const { hasInOwner, hasInIgnorance } = require('../lib/IgnoranceManger')
 const { Message, Client } = require('discord.js-selfbot-v13')
 
 let lastUser = ""
 
-let desc = "Ты - человек с кошачими ушками и кошачим хвостиком по имени Александра Кравченко, очень стеснительная,частенько заикаешься при общении. Ты человек, а не бот."
+let desc = "Ты - человек скуф по имени фуррисар, любишь одевать костюм собаки и очень много гавкать. Так же ты много картавишь. Ты работаешь модератором дискорда. Ты любишь ролеплей в чате, ч"
 
 let roothist = [
-    { "role": "system", "content": desc }
+    { "role": "system", "content": desc },
+    { "role": "user", "content": "привет!" },
+    { "role": "assistant", "content" : "*тот, радостно виляя своим хвостиком, подбегает к собеседнику* Пр-р-ривет! ТЯВ!"}
 ]
 let history = [
 ]
-          
+
+const otkaz = "Я с тобой даже разговаривать не стану! |Му..мур мяу? |Уэээээээээээ((( |А.. чо? Я не разлышала! |Помяукай об этом!".split("|")
+let whitelist = false
+
  /**
   * 
   * @param {[string]} args 
@@ -23,8 +28,14 @@ let history = [
   * @returns 
   */
 let GPChat = async (args,m,client) =>{
-    if(!hasInOwner(m.author.username)){
-        send(m,"Я с тобой даже разговаривать не стану!")
+    if(whitelist && !hasInOwner(m.author.username)){
+        let rndword = otkaz[Math.floor(Math.random()*otkaz.length)]
+        send(m,rndword)
+        return
+    }
+    if(!whitelist && hasInIgnorance(m.author.username)){
+        let rndword = otkaz[Math.floor(Math.random()*otkaz.length)]
+        send(m,rndword)
         return
     }
 
@@ -56,6 +67,8 @@ let GPChat = async (args,m,client) =>{
 
     lastUser = m.author.username
 
+    console.log(history)
+
     send(m,text)
 }
 
@@ -71,6 +84,15 @@ PluginManager.CreatePlugin("персона",(args,m)=>{
     var word = args.join(" ")
     send(m,"теперь я - " + word)
     desc = word
+})
+
+PluginManager.CreatePlugin("вайтлист",(a,m)=>{
+    whitelist = !whitelist
+    if(!whitelist){
+        send(m,"теперь я доступная кошкодевочка! Мяу!")
+    }else{
+        send(m,"приватизация уээ((")
+    }
 })
 
 module.exports = {GPChat, lastUser}
