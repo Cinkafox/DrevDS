@@ -5,11 +5,12 @@ const { Streamer, streamLivestreamVideo } = require('@dank074/discord-video-stre
 const Logger = require('./lib/Logger')
 const send = require('./lib/SendMessageManager')
 const ConnectionManager = require('./lib/ConnectionManager')
-const {GPChat, lastUser} = require("./plugins/PiskaGPT")
 const envout = require('dotenv').config()
 if(envout.error){
     throw new Error("ENV FUCKED!" + envout.error.message)
 }
+
+const {GPChat, lastUser} = require("./plugins/PiskaGPT")
 
 
 const client = new Client({
@@ -26,7 +27,14 @@ client.on('ready', async () => {
 
 client.on("messageCreate",async(m)=>{
     if (m.author.username === client.user.username) return
+    if(m.channelId == "1134087550030598144") return
+
     const args = m.content.split(" ")
+
+    if(m.content.toLocaleLowerCase().includes("алис")){
+        GPChat(["s",...args],m,client)
+        return;
+    }
 
     const name = args.shift()
     if(args.length == 0) return

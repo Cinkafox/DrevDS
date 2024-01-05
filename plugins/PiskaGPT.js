@@ -4,21 +4,67 @@ const send = require("../lib/SendMessageManager")
 const tiny = require('tiny-json-http')        
 const { hasInOwner, hasInIgnorance } = require('../lib/IgnoranceManger')
 const { Message, Client } = require('discord.js-selfbot-v13')
+const fs = require('fs')
 
 let lastUser = ""
 
-let desc = "Ты - человек скуф по имени фуррисар, любишь одевать костюм собаки и очень много гавкать. Так же ты много картавишь. Ты работаешь модератором дискорда. Ты любишь ролеплей в чате, ч"
+let roothist = []
 
-let roothist = [
-    { "role": "system", "content": desc },
-    { "role": "user", "content": "привет!" },
-    { "role": "assistant", "content" : "*тот, радостно виляя своим хвостиком, подбегает к собеседнику* Пр-р-ривет! ТЯВ!"}
-]
-let history = [
-]
+let userhistory = {}
 
 const otkaz = "Я с тобой даже разговаривать не стану! |Му..мур мяу? |Уэээээээээээ((( |А.. чо? Я не разлышала! |Помяукай об этом!".split("|")
 let whitelist = false
+
+let ReadBotProperties = (raw)=>{
+    roothist = []
+    history = []
+    raw.split("\n").forEach(element => {
+        let splited = element.split("|")
+        roothist.push({"role":splited[0],"content":splited[1]})
+    });
+    console.log(roothist)
+}
+
+let WriteBotProperties = ()=>{
+    let text = ""
+    roothist.forEach(v=>{
+        text += v.role + "|" + v.content + "\n"
+    })
+    return text
+}
+
+ReadBotProperties(fs.readFileSync("bot.txt").toString())
+
+/**
+ * 
+ * @param {string} input 
+ */
+let ParseGif = async (input,m)=>{
+    let out = ""
+    for await(let el of input.split("/gif \"")){
+        let splited = el.split("\"")
+        if(splited.length == 1) out += el
+        else if(splited.length == 2) {
+            let uri = await findGif(splited[0])
+            Logger.debug("Finded gif " + uri)
+            send(m,uri)
+            out += splited[1]
+        }
+    }
+    return out
+}
+
+let findGif = async(word)=>{
+    let url = "https://tenor.googleapis.com/v2/search?q="+encodeURI(word)+"&key="+process.env.YKEY+"&limit=1"
+    try {
+        let a = await tiny.get({
+            url
+        })
+        return a.body.results[0].url
+    } catch (error) {
+        return "оу.. а тут нету гифки, прости"
+    }
+}
 
  /**
   * 
@@ -43,11 +89,22 @@ let GPChat = async (args,m,client) =>{
     var word = args.join(" ")
     Logger.debug(word)
 
+    if(userhistory[m.author.username] == null){
+        userhistory[m.author.username] = []
+        Logger.debug("Creating new history for " + m.author.username)
+    }
+
+    Logger.debug("Loading user history length " + userhistory.length)
+
+    let history = userhistory[m.author.username]
+
     while(history.length > 6){
         history.shift()
     }
 
     history.push({"role": "user", "content": word})
+
+    m.channel.sendTyping()
 
     var a = await tiny.post({url:"https://api.proxyapi.ru/openai/v1/chat/completions",headers:{
         "Authorization":"Bearer " + process.env.CKEY
@@ -67,12 +124,10 @@ let GPChat = async (args,m,client) =>{
 
     lastUser = m.author.username
 
-    console.log(history)
-
-    send(m,text)
+    var output = await ParseGif(text,m)
+    if(output.length != 0)
+        m.channel.send(output)
 }
-
-PluginManager.CreatePlugin("слышь",GPChat)
 
 PluginManager.CreatePlugin("персона",(args,m)=>{
     if(!hasInOwner(m.author.username)){
@@ -81,9 +136,10 @@ PluginManager.CreatePlugin("персона",(args,m)=>{
     }
 
     args.shift()
-    var word = args.join(" ")
-    send(m,"теперь я - " + word)
-    desc = word
+    let words = args.join(" ")
+    fs.writeFileSync("bot.txt",words)
+    ReadBotProperties(words)
+    send(m,"приколы обновлены") 
 })
 
 PluginManager.CreatePlugin("вайтлист",(a,m)=>{

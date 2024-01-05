@@ -1,6 +1,7 @@
 const PluginManager = require('../lib/PluginManager')
 const playMuzon = require('../lib/MusicPlayer')
-const Logger = require('../lib/Logger')
+const Logger = require('../lib/Logger');
+const send = require('../lib/SendMessageManager');
 
 PluginManager.CreatePlugin("пофырчи",(args,m) =>{
     let pitch = Number(args[1])

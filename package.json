@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Cinka",
   "license": "ISC",
   "dependencies": {
     "@dank074/discord-video-stream": "^3.0.2",
